@@ -57,3 +57,7 @@ build
 # dotenv environment variables file
 .env
 .elasticbeanstalk
+.env.development
+.env.production
+.env.test
+.env.production
