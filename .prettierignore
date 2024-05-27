@@ -1,0 +1,6 @@
+.github/workflows/*.yml
+./.next/**
+./public/**
+
+package-lock.json
+
