@@ -7,4 +7,4 @@ const NavBar = () => {
 
 export default NavBar;
 
-const wrapper = cva(["border-4 border-[red]", "", "", "", "", "", ""]);
+const wrapper = cva(["w-[100%]", "h-[30px]"]);

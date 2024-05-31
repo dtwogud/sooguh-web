@@ -16,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <main className={"lg:p-[16px] sm:p-[8px]"}>{children}</main>
+        <main className={"lg:p-[16px] sm:p-[8px] min-w-full min-h-screen"}>
+          {children}
+        </main>
       </body>
     </html>
   );
