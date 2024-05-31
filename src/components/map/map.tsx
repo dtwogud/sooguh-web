@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
-import Script from "next/script";
 import {
-  MapMarker,
   Map as KakaoMap,
+  MapMarker,
   useKakaoLoader,
 } from "react-kakao-maps-sdk";
 
