@@ -1,5 +1,10 @@
+import NavBar from "@/src/components/nav-bar/nav-bar";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    <main className="p-24 border-[2px] border-red">
+      <NavBar />
+      asdf
+    </main>
   );
 }
