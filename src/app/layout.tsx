@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import "@/src/styles/globals.css";
+import "@/src/styles/reset.css";
 
 export const metadata: Metadata = {
   title: "SOOGUH",
@@ -11,12 +9,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+  params: string;
+}) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="ko">
+      <body>
+        <main className={"lg:p-[16px] sm:p-[8px]"}>{children}</main>
+      </body>
     </html>
   );
 }
