@@ -23,7 +23,7 @@ const Map = () => {
             position={{ lat: 37.45857097793072, lng: 126.89738261529611 }}
           >
             <div className={"test"} style={{ backgroundColor: "pink" }}>
-              혠 하우스~!
+              test
             </div>
           </MapMarker>
           {/* TODO marker cluster 처리  <MarkerClusterer
