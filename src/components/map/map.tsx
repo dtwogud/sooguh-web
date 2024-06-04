@@ -64,7 +64,7 @@ const Map = () => {
           }}
           className={"w-[100%] h-[100%]"}
           level={3}
-          onBoundsChanged={(data) => handleOnBoundsChange(data)}
+          //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
         >
           {dummyData.info.map((data) => {
             return (
