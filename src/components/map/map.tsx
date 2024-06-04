@@ -59,7 +59,7 @@ const Map = () => {
 
   return (
     <>
-      <div className="w-[100%] h-[90vh]">
+      <div className="w-[100%] h-[70vh]">
         <KakaoMap
           center={{
             lat: coords.latitude ?? 37.5664056,
