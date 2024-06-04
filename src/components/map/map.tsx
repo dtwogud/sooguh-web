@@ -4,8 +4,10 @@ import {
   Map as KakaoMap,
   MapMarker,
   useKakaoLoader,
+  useMap,
 } from "react-kakao-maps-sdk";
 import useCoords, { ICoordsState } from "@/src/hooks/useCoords";
+import SearchAddressBar from "@/src/components/map/search-address-bar";
 
 export interface DetailData {
   id: number;
@@ -37,6 +39,7 @@ const dummyData = {
 const Map = () => {
   const [loading, error] = useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_APP_KEY!,
+    libraries: ["clusterer", "drawing", "services"],
   });
   const curCoords = useCoords("waring");
   const [coords, setCoords] = useState<ICoordsState>(curCoords);
@@ -66,6 +69,7 @@ const Map = () => {
           level={3}
           //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
         >
+          <SearchAddressBar />
           {dummyData.info.map((data) => {
             return (
               <MapMarker
