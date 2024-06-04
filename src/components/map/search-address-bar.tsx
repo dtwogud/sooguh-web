@@ -1,7 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useMap } from "react-kakao-maps-sdk";
+import { useForm } from "react-hook-form";
+import Form from "@/src/components/form/Form";
+import FormItem from "@/src/components/form/FormItem";
+import TextInput from "@/src/components/input/TextInput";
 
 const SearchAddressBar = () => {
+  const form = useForm<any>();
   const [info, setInfo] = useState<string>("");
   const map = useMap();
 
@@ -44,10 +49,15 @@ const SearchAddressBar = () => {
     if (keyword) setInfo(keyword);
   };
 
+  const handleSubmit = (values: any) => {};
+
   return (
     <>
-      주소 검색 :
-      <input onChange={handleSearchKeyword} />
+      <Form form={form} handleSubmit={handleSubmit}>
+        <FormItem name={"search"} label={"주소 검색"}>
+          <TextInput />
+        </FormItem>
+      </Form>
     </>
   );
 };
