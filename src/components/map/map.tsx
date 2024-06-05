@@ -45,6 +45,9 @@ const Map = () => {
   });
   const curCoords = useCoords("waring");
   const [coords, setCoords] = useState<ICoordsState>(curCoords);
+  const [detailData, setDetailData] = useState<DetailData | undefined>(
+    undefined,
+  );
   const { openModal, onModalOpen, onModalClose } = useModal();
 
   useEffect(() => {
@@ -57,6 +60,7 @@ const Map = () => {
 
   const handleMarkerClick = (marker: kakao.maps.Marker, data: DetailData) => {
     onModalOpen();
+    setDetailData(data);
     console.log("marker", marker);
     console.log("data", data);
   };
@@ -85,7 +89,15 @@ const Map = () => {
           })}
         </KakaoMap>
         <Modal isOpen={openModal} onClose={onModalClose}>
-          <Modal.Content className={""}>modal test</Modal.Content>
+          <Modal.Content
+            className={
+              "bg-[white] text-[black] fixed top-[50%] left-[50%] border border-[blue]"
+            }
+          >
+            <p>{detailData?.dong}</p>
+            <p>{detailData?.address}</p>
+            <p></p>
+          </Modal.Content>
         </Modal>
       </div>
     </>

@@ -20,7 +20,8 @@ const useCoords = (warningText: string) => {
 
   // 위치 미허용 시 실행
   const onFailure = useCallback(
-    (error: GeolocationPositionError) => alert(`${warningText} >> ${error}`),
+    (error: GeolocationPositionError) =>
+      console.log(`${warningText} >> ${error}`),
     [warningText],
   );
 
