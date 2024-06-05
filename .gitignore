@@ -62,3 +62,4 @@ build
 .env.test
 .env.production
 .idea/prettier.xml
+.idea/aws.xml
