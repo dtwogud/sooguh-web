@@ -8,6 +8,8 @@ import {
 } from "react-kakao-maps-sdk";
 import useCoords, { ICoordsState } from "@/src/hooks/useCoords";
 import SearchAddressBar from "@/src/components/map/search-address-bar";
+import useModal from "@/src/hooks/useModal";
+import Modal from "@/src/components/modal/modal";
 
 export interface DetailData {
   id: number;
@@ -43,6 +45,7 @@ const Map = () => {
   });
   const curCoords = useCoords("waring");
   const [coords, setCoords] = useState<ICoordsState>(curCoords);
+  const { openModal, onModalOpen, onModalClose } = useModal();
 
   useEffect(() => {
     if (curCoords) setCoords(curCoords);
@@ -53,6 +56,7 @@ const Map = () => {
   }, []);
 
   const handleMarkerClick = (marker: kakao.maps.Marker, data: DetailData) => {
+    onModalOpen();
     console.log("marker", marker);
     console.log("data", data);
   };
@@ -80,6 +84,9 @@ const Map = () => {
             );
           })}
         </KakaoMap>
+        <Modal isOpen={openModal} onClose={onModalClose}>
+          <Modal.Content className={""}>modal test</Modal.Content>
+        </Modal>
       </div>
     </>
   );
