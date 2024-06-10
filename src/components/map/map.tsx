@@ -62,8 +62,6 @@ const Map = () => {
   const handleMarkerClick = (marker: kakao.maps.Marker, data: DetailData) => {
     onModalOpen();
     setDetailData(data);
-    console.log("marker", marker);
-    console.log("data", data);
   };
 
   return (

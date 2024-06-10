@@ -14,7 +14,7 @@ const PinModal = ({ data, openModal, onModalClose }: PinModalProps) => {
     <Modal isOpen={openModal} onClose={onModalClose}>
       <Modal.Content
         className={
-          "bg-[white] text-[black] fixed top-[50%] left-[50%] border border-[blue]"
+          "bg-[white] text-[black] fixed top-[40%] left-[50%] border border-[blue] translate-x-[-50%] translate-y-[-50%]"
         }
       >
         <p>{data?.dong}</p>
