@@ -10,6 +10,7 @@ import useCoords, { ICoordsState } from "@/src/hooks/useCoords";
 import SearchAddressBar from "@/src/components/map/search-address-bar";
 import useModal from "@/src/hooks/useModal";
 import Modal from "@/src/components/modal/modal";
+import PinModal from "@/src/components/main/pin-modal";
 
 export interface DetailData {
   id: number;
@@ -88,17 +89,11 @@ const Map = () => {
             );
           })}
         </KakaoMap>
-        <Modal isOpen={openModal} onClose={onModalClose}>
-          <Modal.Content
-            className={
-              "bg-[white] text-[black] fixed top-[50%] left-[50%] border border-[blue]"
-            }
-          >
-            <p>{detailData?.dong}</p>
-            <p>{detailData?.address}</p>
-            <p></p>
-          </Modal.Content>
-        </Modal>
+        <PinModal
+          data={detailData}
+          openModal={openModal}
+          onModalClose={onModalClose}
+        />
       </div>
     </>
   );
