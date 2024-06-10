@@ -4,12 +4,10 @@ import {
   Map as KakaoMap,
   MapMarker,
   useKakaoLoader,
-  useMap,
 } from "react-kakao-maps-sdk";
 import useCoords, { ICoordsState } from "@/src/hooks/useCoords";
 import SearchAddressBar from "@/src/components/map/search-address-bar";
 import useModal from "@/src/hooks/useModal";
-import Modal from "@/src/components/modal/modal";
 import PinModal from "@/src/components/main/pin-modal";
 
 export interface DetailData {
@@ -86,12 +84,12 @@ const Map = () => {
               />
             );
           })}
+          <PinModal
+            data={detailData}
+            openModal={openModal}
+            onModalClose={onModalClose}
+          />
         </KakaoMap>
-        <PinModal
-          data={detailData}
-          openModal={openModal}
-          onModalClose={onModalClose}
-        />
       </div>
     </>
   );
