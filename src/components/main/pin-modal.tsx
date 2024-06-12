@@ -69,25 +69,37 @@ const PinModal = ({ data, openModal, onModalClose }: PinModalProps) => {
       <Modal isOpen={openModal} onClose={onModalClose}>
         <Modal.Content
           className={
-            "bg-[white] text-[black] fixed top-[40%] left-[50%] border border-[blue] translate-x-[-50%] translate-y-[-50%]"
+            "bg-[white] text-[black] fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-[12px]"
           }
         >
-          <p>{data?.dong}</p>
-          <p>{data?.address}</p>
-          <p>
-            <button onClick={handleToNavigate} className={"border bg-[pink]"}>
+          <div
+            className={
+              "sm:px-[12px] lg:px-[24px] sm:pt-[12px] lg:pt-[24px] sm:gap-[8px] lg:gap-[12px] whitespace-nowrap"
+            }
+          >
+            <div>{data?.dong}</div>
+            <div className={"mb-[12px]"}>{data?.address}</div>
+          </div>
+          <div className={"bg-[white] text-[black] grid grid-cols-2"}>
+            <button
+              onClick={handleToNavigate}
+              className={"bg-[yellowgreen] p-[12px]"}
+            >
               길 안내 받기
             </button>
-          </p>
+            <button onClick={onModalClose} className={"p-[12px]"}>
+              확인
+            </button>
+          </div>
         </Modal.Content>
       </Modal>
       {linePath && (
         <Polyline
           path={[linePath]}
-          strokeWeight={5} // 선의 두께 입니다
-          strokeColor={"#fc0202"} // 선의 색깔입니다
-          strokeOpacity={1} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-          strokeStyle={"solid"} // 선의 스타일입니다
+          strokeWeight={5} // 선의 두께
+          strokeColor={"#fc0202"} // 선의 색
+          strokeOpacity={1} // 선의 불투명
+          strokeStyle={"solid"} // 선의 스타일
         />
       )}
     </>
