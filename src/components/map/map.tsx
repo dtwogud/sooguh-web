@@ -10,6 +10,7 @@ import SearchAddressBar from "@/src/components/map/search-address-bar";
 import useModal from "@/src/hooks/useModal";
 import PinModal from "@/src/components/main/pin-modal";
 import useResize from "@/src/hooks/useResize";
+import NavBar from "@/src/components/nav-bar/nav-bar";
 
 export interface DetailData {
   id: number;
@@ -79,43 +80,52 @@ const Map = () => {
       {isLoading ? (
         <>Loading...</>
       ) : (
-        <div className="w-[100%] h-[70vh]">
-          <KakaoMap
-            center={{
-              lat: coords.latitude ?? 37.5664056,
-              lng: coords.longitude ?? 126.9778222,
-            }}
-            className={"w-[100%] h-[100%]"}
-            level={3}
-            //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
-          >
-            <SearchAddressBar />
-            <MapMarker
-              key={`${coords.latitude ?? 37.5664056}-${coords.longitude ?? 126.9778222}`}
-              position={{
-                lat: coords.latitude ?? 37.5664056,
-                lng: coords.longitude ?? 126.9778222,
+        <div className="w-[100%] h-[70vh] z-10">
+          {coords.latitude && coords.longitude && (
+            <KakaoMap
+              center={{
+                lat: coords.latitude,
+                lng: coords.longitude,
               }}
-              image={{
-                src: "/assets/icons/location.png",
-                size: { width: isMobile ? 32 : 64, height: isMobile ? 32 : 64 },
-              }}
-            />
-            {dummyData.info.map((data) => {
-              return (
+              className={"w-[100%] h-[100%]"}
+              level={3}
+              //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
+            >
+              <SearchAddressBar />
+              {coords.latitude && coords.longitude && (
                 <MapMarker
-                  key={`${data.lat}-${data.lon}`}
-                  position={{ lat: data.lat, lng: data.lon }}
-                  onClick={(marker) => handleMarkerClick(marker, data)}
+                  key={`${coords.latitude ?? 37.5664056}-${coords.longitude ?? 126.9778222}`}
+                  position={{
+                    lat: coords.latitude,
+                    // ?? 37.5664056,
+                    lng: coords.longitude,
+                    // ?? 126.9778222,
+                  }}
+                  image={{
+                    src: "/assets/icons/location.png",
+                    size: {
+                      width: isMobile ? 32 : 64,
+                      height: isMobile ? 32 : 64,
+                    },
+                  }}
                 />
-              );
-            })}
-            <PinModal
-              data={detailData}
-              openModal={openModal}
-              onModalClose={onModalClose}
-            />
-          </KakaoMap>
+              )}
+              {dummyData.info.map((data) => {
+                return (
+                  <MapMarker
+                    key={`${data.lat}-${data.lon}`}
+                    position={{ lat: data.lat, lng: data.lon }}
+                    onClick={(marker) => handleMarkerClick(marker, data)}
+                  />
+                );
+              })}
+              <PinModal
+                data={detailData}
+                openModal={openModal}
+                onModalClose={onModalClose}
+              />
+            </KakaoMap>
+          )}
         </div>
       )}
     </>

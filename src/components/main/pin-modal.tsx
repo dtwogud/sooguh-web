@@ -64,6 +64,10 @@ const PinModal = ({ data, openModal, onModalClose }: PinModalProps) => {
     onModalClose();
   };
 
+  const handleResetPath = () => {
+    setLinePath([]);
+  };
+
   return (
     <>
       <Modal isOpen={openModal} onClose={onModalClose}>
@@ -93,6 +97,7 @@ const PinModal = ({ data, openModal, onModalClose }: PinModalProps) => {
           </div>
         </Modal.Content>
       </Modal>
+      <button onClick={handleResetPath}>경로 안내 초기화</button>
       {linePath && (
         <Polyline
           path={[linePath]}

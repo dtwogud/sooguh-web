@@ -16,7 +16,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <main className={"lg:p-[16px] sm:p-[8px] min-w-full min-h-screen"}>
+        <main
+          className={
+            "lg:p-[16px] sm:p-[8px] min-w-full min-h-screen grid relative"
+          }
+        >
           {children}
         </main>
       </body>
