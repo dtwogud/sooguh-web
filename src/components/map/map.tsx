@@ -48,6 +48,7 @@ const Map = () => {
   const [coords, setCoords] = useState<ICoordsState>(curCoords);
   const [isLoading, setIsLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [linePath, setLinePath] = useState<any[]>([]);
   const [detailData, setDetailData] = useState<DetailData | undefined>(
     undefined,
   );
@@ -78,7 +79,7 @@ const Map = () => {
   return (
     <>
       {isLoading ? (
-        <>Loading...</>
+        <div className={"flex h-[100%] items-center"}>Loading...</div>
       ) : (
         <div className="w-[100%] h-[70vh] z-10">
           {coords.latitude && coords.longitude && (
@@ -91,15 +92,14 @@ const Map = () => {
               level={3}
               //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
             >
+              <NavBar setLinePath={setLinePath} />
               <SearchAddressBar />
               {coords.latitude && coords.longitude && (
                 <MapMarker
                   key={`${coords.latitude ?? 37.5664056}-${coords.longitude ?? 126.9778222}`}
                   position={{
                     lat: coords.latitude,
-                    // ?? 37.5664056,
                     lng: coords.longitude,
-                    // ?? 126.9778222,
                   }}
                   image={{
                     src: "/assets/icons/location.png",
@@ -123,6 +123,8 @@ const Map = () => {
                 data={detailData}
                 openModal={openModal}
                 onModalClose={onModalClose}
+                linePath={linePath}
+                setLinePath={setLinePath}
               />
             </KakaoMap>
           )}

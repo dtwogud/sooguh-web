@@ -8,16 +8,23 @@ export interface PinModalProps {
   data?: DetailData;
   openModal: boolean;
   onModalClose: () => void;
+  linePath: any[];
+  setLinePath: (linePath: () => { lng: any; lat: any }[]) => void;
 }
 
-const PinModal = ({ data, openModal, onModalClose }: PinModalProps) => {
+const PinModal = ({
+  data,
+  openModal,
+  onModalClose,
+  linePath,
+  setLinePath,
+}: PinModalProps) => {
   const curCoords = useCoords("waring");
   const kakaoUrl = "https://apis-navi.kakaomobility.com/v1/directions";
   const headers = {
     Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY!}`,
     "Content-Type": "application/json",
   };
-  const [linePath, setLinePath] = useState<any[]>();
 
   const handleToNavigate = async () => {
     const queryParams = new URLSearchParams({
@@ -51,7 +58,7 @@ const PinModal = ({ data, openModal, onModalClose }: PinModalProps) => {
           });
           if (linePath.length > 0) {
             setLinePath(() =>
-              linePath.map((item) => {
+              linePath.map((item: any) => {
                 return { lat: item.Ma, lng: item.La };
               }),
             );
@@ -62,10 +69,6 @@ const PinModal = ({ data, openModal, onModalClose }: PinModalProps) => {
       console.log("error", e);
     }
     onModalClose();
-  };
-
-  const handleResetPath = () => {
-    setLinePath([]);
   };
 
   return (
@@ -97,7 +100,6 @@ const PinModal = ({ data, openModal, onModalClose }: PinModalProps) => {
           </div>
         </Modal.Content>
       </Modal>
-      <button onClick={handleResetPath}>경로 안내 초기화</button>
       {linePath && (
         <Polyline
           path={[linePath]}
