@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+import CoordsContext from "@/src/context/coords.context";
 
 export interface ICoordsState {
   latitude: number | null;
@@ -6,6 +7,7 @@ export interface ICoordsState {
 }
 
 const useCoords = (warningText: string) => {
+  const { dispatch } = useContext(CoordsContext);
   const [coords, setCoords] = useState<ICoordsState>({
     latitude: null,
     longitude: null,
@@ -13,8 +15,13 @@ const useCoords = (warningText: string) => {
 
   // 위치 허용 시 실행
   const onSuccess = useCallback(
-    ({ coords: { latitude, longitude } }: GeolocationPosition) =>
-      setCoords({ latitude, longitude }),
+    ({ coords: { latitude, longitude } }: GeolocationPosition) => {
+      setCoords({ latitude, longitude });
+      dispatch({
+        type: "UPDATE_COORDS",
+        payload: { coords: { latitude, longitude } },
+      });
+    },
     [],
   );
 

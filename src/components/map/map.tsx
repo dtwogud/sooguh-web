@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   Map as KakaoMap,
   MapMarker,
@@ -11,6 +11,7 @@ import useModal from "@/src/hooks/useModal";
 import PinModal from "@/src/components/main/pin-modal";
 import useResize from "@/src/hooks/useResize";
 import NavBar from "@/src/components/nav-bar/nav-bar";
+import CoordsContext from "@/src/context/coords.context";
 
 export interface DetailData {
   id: number;
@@ -45,7 +46,7 @@ const Map = () => {
     libraries: ["clusterer", "drawing", "services"],
   });
   const curCoords = useCoords("waring");
-  const [coords, setCoords] = useState<ICoordsState>(curCoords);
+  const [coord, setCoord] = useState<ICoordsState>(curCoords);
   const [isLoading, setIsLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [linePath, setLinePath] = useState<any[]>([]);
@@ -53,6 +54,12 @@ const Map = () => {
     undefined,
   );
   const { openModal, onModalOpen, onModalClose } = useModal();
+
+  // TODO coords context 사용
+  const {
+    state: { coords },
+  } = useContext(CoordsContext);
+  console.log("coords", coords);
 
   useResize(() => {
     if (window.innerWidth > 640) setIsMobile(false);
@@ -62,7 +69,7 @@ const Map = () => {
   useEffect(() => {
     if (!curCoords) setIsLoading(true);
     if (curCoords) {
-      setCoords(curCoords);
+      setCoord(curCoords);
       setIsLoading(false);
     }
   }, [curCoords]);
@@ -82,11 +89,11 @@ const Map = () => {
         <div className={"flex h-[100%] items-center"}>Loading...</div>
       ) : (
         <div className="w-[100%] h-[70vh] z-10">
-          {coords.latitude && coords.longitude && (
+          {coord.latitude && coord.longitude && (
             <KakaoMap
               center={{
-                lat: coords.latitude,
-                lng: coords.longitude,
+                lat: coord.latitude,
+                lng: coord.longitude,
               }}
               className={"w-[100%] h-[100%]"}
               level={3}
@@ -94,12 +101,12 @@ const Map = () => {
             >
               <NavBar setLinePath={setLinePath} />
               <SearchAddressBar />
-              {coords.latitude && coords.longitude && (
+              {coord.latitude && coord.longitude && (
                 <MapMarker
-                  key={`${coords.latitude ?? 37.5664056}-${coords.longitude ?? 126.9778222}`}
+                  key={`${coord.latitude ?? 37.5664056}-${coord.longitude ?? 126.9778222}`}
                   position={{
-                    lat: coords.latitude,
-                    lng: coords.longitude,
+                    lat: coord.latitude,
+                    lng: coord.longitude,
                   }}
                   image={{
                     src: "/assets/icons/location.png",
