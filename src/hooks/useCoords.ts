@@ -27,8 +27,13 @@ const useCoords = (warningText: string) => {
 
   // 위치 미허용 시 실행
   const onFailure = useCallback(
-    (error: GeolocationPositionError) =>
-      console.log(`${warningText} >> ${error}`),
+    (error: GeolocationPositionError) => {
+      console.log(`${warningText} >> ${error}`);
+      dispatch({
+        type: "UPDATE_COORDS",
+        payload: { coords: { latitude: 37.5759, longitude: 126.9768 } },
+      });
+    },
     [warningText],
   );
 

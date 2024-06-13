@@ -83,58 +83,58 @@ const Map = () => {
     setDetailData(data);
   };
 
+  console.log(coords);
+
   return (
     <>
       {isLoading ? (
         <div className={"flex h-[100%] items-center"}>Loading...</div>
       ) : (
         <div className="w-[100%] h-[70vh] z-10">
-          {coord.latitude && coord.longitude && (
-            <KakaoMap
-              center={{
-                lat: coord.latitude,
-                lng: coord.longitude,
-              }}
-              className={"w-[100%] h-[100%]"}
-              level={3}
-              //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
-            >
-              <NavBar setLinePath={setLinePath} />
-              <SearchAddressBar />
-              {coord.latitude && coord.longitude && (
-                <MapMarker
-                  key={`${coord.latitude ?? 37.5664056}-${coord.longitude ?? 126.9778222}`}
-                  position={{
-                    lat: coord.latitude,
-                    lng: coord.longitude,
-                  }}
-                  image={{
-                    src: "/assets/icons/location.png",
-                    size: {
-                      width: isMobile ? 32 : 64,
-                      height: isMobile ? 32 : 64,
-                    },
-                  }}
-                />
-              )}
-              {dummyData.info.map((data) => {
-                return (
-                  <MapMarker
-                    key={`${data.lat}-${data.lon}`}
-                    position={{ lat: data.lat, lng: data.lon }}
-                    onClick={(marker) => handleMarkerClick(marker, data)}
-                  />
-                );
-              })}
-              <PinModal
-                data={detailData}
-                openModal={openModal}
-                onModalClose={onModalClose}
-                linePath={linePath}
-                setLinePath={setLinePath}
+          <KakaoMap
+            center={{
+              lat: coord.latitude ?? coords?.latitude!,
+              lng: coord.longitude ?? coords?.longitude!,
+            }}
+            className={"w-[100%] h-[100%]"}
+            level={3}
+            //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
+          >
+            <NavBar setLinePath={setLinePath} />
+            <SearchAddressBar />
+            {coord.latitude && coord.longitude && (
+              <MapMarker
+                key={`${coord.latitude ?? 37.5664056}-${coord.longitude ?? 126.9778222}`}
+                position={{
+                  lat: coord.latitude,
+                  lng: coord.longitude,
+                }}
+                image={{
+                  src: "/assets/icons/location.png",
+                  size: {
+                    width: isMobile ? 32 : 64,
+                    height: isMobile ? 32 : 64,
+                  },
+                }}
               />
-            </KakaoMap>
-          )}
+            )}
+            {dummyData.info.map((data) => {
+              return (
+                <MapMarker
+                  key={`${data.lat}-${data.lon}`}
+                  position={{ lat: data.lat, lng: data.lon }}
+                  onClick={(marker) => handleMarkerClick(marker, data)}
+                />
+              );
+            })}
+            <PinModal
+              data={detailData}
+              openModal={openModal}
+              onModalClose={onModalClose}
+              linePath={linePath}
+              setLinePath={setLinePath}
+            />
+          </KakaoMap>
         </div>
       )}
     </>
