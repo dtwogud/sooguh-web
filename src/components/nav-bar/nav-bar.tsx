@@ -1,9 +1,10 @@
 import React from "react";
 import { cva } from "class-variance-authority";
+import { ICoordsState } from "@/src/hooks/useCoords";
 
 export interface NavBarProps {
   setLinePath: (linePath: any) => void;
-  curCoords: { latitude: number; longitude: number };
+  curCoords: ICoordsState;
 }
 
 const NavBar = ({ setLinePath, curCoords }: NavBarProps) => {
