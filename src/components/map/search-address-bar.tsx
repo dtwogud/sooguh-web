@@ -36,7 +36,6 @@ const SearchAddressBar = () => {
           }
 
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-          console.log("bounds", bounds);
           map.panTo(bounds);
         }
       });

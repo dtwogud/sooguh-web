@@ -1,26 +1,36 @@
-import React from "react";
+import React, { useContext } from "react";
 import { cva } from "class-variance-authority";
 import { ICoordsState } from "@/src/hooks/useCoords";
+import { useMap } from "react-kakao-maps-sdk";
+import CoordsContext from "@/src/context/coords.context";
 
 export interface NavBarProps {
   setLinePath: (linePath: any) => void;
-  curCoords: ICoordsState;
 }
 
-const NavBar = ({ setLinePath, curCoords }: NavBarProps) => {
+const NavBar = ({ setLinePath }: NavBarProps) => {
+  const map = useMap();
+  const {
+    state: { coords },
+  } = useContext(CoordsContext);
+
   const handleResetPath = () => {
     setLinePath([]);
   };
 
   const handleToCurCoords = () => {
-    console.log("123", curCoords);
+    const moveLatLon = new kakao.maps.LatLng(
+      coords!.latitude!,
+      coords!.longitude!,
+    );
+    map.setCenter(moveLatLon);
   };
 
   return (
     <div className={wrapper()} style={{ zIndex: "800" }}>
-      <button onClick={handleResetPath}>초기화</button>
-      &nbsp;
-      <button onClick={handleToCurCoords}> | 현재 위치로 돌아가기</button>
+      <button onClick={handleToCurCoords}>현재 위치로 돌아가기</button>
+      &nbsp; &nbsp;
+      <button onClick={handleResetPath}>| &nbsp;초기화</button>
     </div>
   );
 };

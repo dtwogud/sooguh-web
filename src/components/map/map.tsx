@@ -59,7 +59,6 @@ const Map = () => {
   const {
     state: { coords },
   } = useContext(CoordsContext);
-  console.log("coords", coords);
 
   useResize(() => {
     if (window.innerWidth > 640) setIsMobile(false);
@@ -83,8 +82,6 @@ const Map = () => {
     setDetailData(data);
   };
 
-  console.log(coords);
-
   return (
     <>
       {isLoading ? (
@@ -100,7 +97,7 @@ const Map = () => {
             level={3}
             //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
           >
-            <NavBar setLinePath={setLinePath} curCoords={coords} />
+            <NavBar setLinePath={setLinePath} />
             <SearchAddressBar />
             {coord.latitude && coord.longitude && (
               <MapMarker

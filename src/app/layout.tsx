@@ -9,9 +9,7 @@ export const metadata: Metadata = {
   description: "우리 주변의 헌웃 수거함을 찾아보아요.",
 };
 
-// { props }: { props: AppLayoutProps }
 export default function RootLayout(props: AppLayoutProps) {
-  console.log("props", props);
   return (
     <html lang="ko">
       <body>
