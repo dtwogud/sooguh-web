@@ -100,7 +100,7 @@ const Map = () => {
             level={3}
             //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
           >
-            <NavBar setLinePath={setLinePath} />
+            <NavBar setLinePath={setLinePath} curCoords={curCoords} />
             <SearchAddressBar />
             {coord.latitude && coord.longitude && (
               <MapMarker
