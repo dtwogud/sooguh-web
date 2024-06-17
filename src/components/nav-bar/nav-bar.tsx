@@ -49,7 +49,7 @@ const wrapper = cva([
   "fixed sm:inset-x-[8px] lg:inset-x-[16px] lg:top-[12px] sm:top-[8px]",
   "rounded-[12px]",
   "border-[2px]",
-  "border-[green]",
+  "border-key-color",
   "bg-[white]",
   "lg:mt-[12px] sm:mt-[8px]",
 ]);

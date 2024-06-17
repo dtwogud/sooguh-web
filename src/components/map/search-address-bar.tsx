@@ -4,6 +4,8 @@ import { FieldValues, useForm } from "react-hook-form";
 import Form from "@/src/components/form/Form";
 import FormItem from "@/src/components/form/FormItem";
 import TextInput from "@/src/components/input/TextInput";
+import { cva } from "class-variance-authority";
+import PrimaryButton from "@/src/components/button/primary-button";
 
 const SearchAddressBar = () => {
   const form = useForm<FieldValues>();
@@ -56,18 +58,22 @@ const SearchAddressBar = () => {
     <>
       <Form form={form} handleSubmit={handleSubmit} className={"pb-[100px]"}>
         <FormItem name={"search"} label={""}>
-          <TextInput placeHolder={"주소를 검색해 주세요."} />
+          <TextInput
+            // className={Input()}
+            placeHolder={"주소를 검색해 주세요."}
+          />
         </FormItem>
-        <button
+        <PrimaryButton
           type="submit"
           onClick={handleSubmit}
           className={"border w-full p-[10px]"}
-        >
-          검색
-        </button>
+          title={"검색"}
+        />
       </Form>
     </>
   );
 };
 
 export default SearchAddressBar;
+
+const Input = cva(["border-[2px] border-key-color"]);

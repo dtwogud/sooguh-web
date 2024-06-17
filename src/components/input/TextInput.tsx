@@ -1,5 +1,6 @@
 "use client";
 import React, { CSSProperties, forwardRef, useState } from "react";
+import { cva } from "class-variance-authority";
 
 export interface TextInputProps {
   name?: string;
@@ -58,7 +59,7 @@ const TextInput = forwardRef<
     <div>
       {/*// @ts-ignore */}
       <input
-        className={"border my-[10px] w-full"}
+        className={Input()}
         id={rest.name}
         ref={ref}
         type={secureText && hideText ? "password" : "text"}
@@ -76,3 +77,15 @@ const TextInput = forwardRef<
 TextInput.displayName = "TextInput";
 
 export default TextInput;
+
+const Input = cva([
+  "border-[2px] border-key-color",
+  "rounded-[12px]",
+  "my-[10px]",
+  "w-full",
+  "text-[16px]",
+  "font-[500]",
+  "leading-[20px]",
+  "h-[50px]",
+  "p-[5px]",
+]);
