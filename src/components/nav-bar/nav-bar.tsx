@@ -51,4 +51,5 @@ const wrapper = cva([
   "border-[2px]",
   "border-[green]",
   "bg-[white]",
+  "lg:mt-[12px] sm:mt-[8px]",
 ]);
