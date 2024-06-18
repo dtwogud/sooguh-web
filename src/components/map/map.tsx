@@ -99,6 +99,7 @@ const Map = () => {
           >
             <NavBar setLinePath={setLinePath} />
             <SearchAddressBar />
+            {/*TODO mapmarker componenet 분리*/}
             {coord.latitude && coord.longitude && (
               <MapMarker
                 key={`${coord.latitude ?? 37.5664056}-${coord.longitude ?? 126.9778222}`}
