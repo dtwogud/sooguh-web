@@ -74,7 +74,7 @@ const TextInput = forwardRef<
         step={"0.01"}
         {...rest}
       />
-      {rightIcon && rightIcon}
+      {rightIcon}
     </div>
   );
 });

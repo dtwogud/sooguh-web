@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMap } from "react-kakao-maps-sdk";
 import { FieldValues, useForm } from "react-hook-form";
 import Form from "@/src/components/form/Form";
@@ -67,14 +67,14 @@ const SearchAddressBar = () => {
         <FormItem name={"search"} label={""}>
           <TextInput
             placeHolder={"주소를 검색해 주세요."}
-            // rightIcon={
-            //   <PrimaryButton
-            //     type="submit"
-            //     onClick={handleSubmit}
-            //     className={"border w-[100px] h-[40px]"}
-            //     title={"검색"}
-            //   />
-            // }
+            rightIcon={
+              <PrimaryButton
+                type="submit"
+                onClick={handleSubmit}
+                className={"border w-[100px] h-[40px]"}
+                title={"검색"}
+              />
+            }
           />
         </FormItem>
       </Form>

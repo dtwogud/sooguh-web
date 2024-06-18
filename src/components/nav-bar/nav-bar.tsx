@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { cva } from "class-variance-authority";
-import { ICoordsState } from "@/src/hooks/useCoords";
 import { useMap } from "react-kakao-maps-sdk";
 import CoordsContext from "@/src/context/coords.context";
 
