@@ -56,7 +56,11 @@ const TextInput = forwardRef<
   };
 
   return (
-    <div>
+    <div
+      className={Wrapper({
+        className: `${rightIcon ? `${className} flex items-center px-[8px]` : className}`,
+      })}
+    >
       {/*// @ts-ignore */}
       <input
         className={Input()}
@@ -70,6 +74,7 @@ const TextInput = forwardRef<
         step={"0.01"}
         {...rest}
       />
+      {rightIcon && rightIcon}
     </div>
   );
 });
@@ -78,14 +83,20 @@ TextInput.displayName = "TextInput";
 
 export default TextInput;
 
-const Input = cva([
+const Wrapper = cva([
   "border-[2px] border-key-color",
   "rounded-[12px]",
-  "my-[10px]",
+  "my-[12px]",
+  "bg-white",
+]);
+
+const Input = cva([
+  "rounded-[12px]",
   "w-full",
   "text-[16px]",
   "font-[500]",
   "leading-[20px]",
   "h-[50px]",
   "p-[5px]",
+  "outline-none",
 ]);

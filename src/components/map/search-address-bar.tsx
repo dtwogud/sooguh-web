@@ -6,11 +6,18 @@ import FormItem from "@/src/components/form/FormItem";
 import TextInput from "@/src/components/input/TextInput";
 import { cva } from "class-variance-authority";
 import PrimaryButton from "@/src/components/button/primary-button";
+import useResize from "@/src/hooks/useResize";
 
 const SearchAddressBar = () => {
   const form = useForm<FieldValues>();
   const [info, setInfo] = useState<string>("");
+  const [isMobile, setIsMobile] = useState(false);
   const map = useMap();
+
+  useResize(() => {
+    if (window.innerWidth > 640) setIsMobile(false);
+    else if (window.innerWidth < 640) setIsMobile(true);
+  });
 
   useEffect(() => {
     if (!map) return;
@@ -55,25 +62,35 @@ const SearchAddressBar = () => {
   };
 
   return (
-    <>
-      <Form form={form} handleSubmit={handleSubmit} className={"pb-[100px]"}>
+    <section className={Wrapper()}>
+      <Form form={form} handleSubmit={handleSubmit}>
         <FormItem name={"search"} label={""}>
           <TextInput
-            // className={Input()}
             placeHolder={"주소를 검색해 주세요."}
+            // rightIcon={
+            //   <PrimaryButton
+            //     type="submit"
+            //     onClick={handleSubmit}
+            //     className={"border w-[100px] h-[40px]"}
+            //     title={"검색"}
+            //   />
+            // }
           />
         </FormItem>
-        <PrimaryButton
-          type="submit"
-          onClick={handleSubmit}
-          className={"border w-full p-[10px]"}
-          title={"검색"}
-        />
       </Form>
-    </>
+    </section>
   );
 };
 
 export default SearchAddressBar;
 
-const Input = cva(["border-[2px] border-key-color"]);
+const Wrapper = cva([
+  "w-[30%]",
+  "sm:w-[100%]",
+  "absolute",
+  "lg:top-0",
+  "z-[81]",
+  "mt-[12px]",
+  "sm:bottom-[0px]",
+  "sm:bg-white",
+]);

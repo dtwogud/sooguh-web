@@ -87,13 +87,13 @@ const Map = () => {
       {isLoading ? (
         <div className={"flex h-[100%] items-center"}>Loading...</div>
       ) : (
-        <div className="w-[100%] h-[70vh] z-10">
+        <div className="w-[100%] z-10 relative">
           <KakaoMap
             center={{
               lat: coord.latitude ?? coords?.latitude!,
               lng: coord.longitude ?? coords?.longitude!,
             }}
-            className={"w-[100%] h-[100%]"}
+            className={"w-[100%] h-[100%] relative"}
             level={3}
             //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
           >

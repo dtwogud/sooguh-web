@@ -27,7 +27,7 @@ const NavBar = ({ setLinePath }: NavBarProps) => {
   };
 
   return (
-    <div className={wrapper()} style={{ zIndex: "800" }}>
+    <div className={wrapper()}>
       <button onClick={handleToCurCoords}>현위치</button>
       &nbsp; &nbsp;
       <button onClick={handleResetPath}>| &nbsp;초기화</button>
@@ -38,15 +38,16 @@ const NavBar = ({ setLinePath }: NavBarProps) => {
 export default NavBar;
 
 const wrapper = cva([
-  "z-80",
+  "z-[80]",
   "absolute",
+  "flex items-center",
+  "fixed sm:inset-x-[8px] lg:inset-x-[16px] lg:top-[12px] sm:top-[8px]",
+  "lg:ml-[30%]",
   "text-[16px]",
   "font-[500]",
   "leading-[20px]",
   "h-[50px]",
-  "p-[5px]",
-  "flex items-center",
-  "fixed sm:inset-x-[8px] lg:inset-x-[16px] lg:top-[12px] sm:top-[8px]",
+  "sm:p-[8px] lg:p-[16px]",
   "rounded-[12px]",
   "border-[2px]",
   "border-key-color",

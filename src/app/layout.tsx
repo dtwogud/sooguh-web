@@ -16,7 +16,7 @@ export default function RootLayout(props: AppLayoutProps) {
         <CoordsProvider coords={props.coords}>
           <main
             className={
-              "lg:p-[16px] sm:p-[8px] min-w-full min-h-screen grid relative"
+              "lg:p-[16px] sm:p-[8px] min-w-full min-h-screen grid relative overflow-scroll"
             }
           >
             {props.children}
