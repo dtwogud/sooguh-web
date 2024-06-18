@@ -28,7 +28,7 @@ const NavBar = ({ setLinePath }: NavBarProps) => {
 
   return (
     <div className={wrapper()} style={{ zIndex: "800" }}>
-      <button onClick={handleToCurCoords}>현재 위치로 돌아가기</button>
+      <button onClick={handleToCurCoords}>현위치</button>
       &nbsp; &nbsp;
       <button onClick={handleResetPath}>| &nbsp;초기화</button>
     </div>

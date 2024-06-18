@@ -109,8 +109,8 @@ const Map = () => {
                 image={{
                   src: "/assets/icons/location.png",
                   size: {
-                    width: isMobile ? 32 : 64,
-                    height: isMobile ? 32 : 64,
+                    width: 41,
+                    height: 64,
                   },
                 }}
               />
