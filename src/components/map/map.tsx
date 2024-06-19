@@ -56,9 +56,9 @@ const Map = () => {
   const { openModal, onModalOpen, onModalClose } = useModal();
 
   // TODO coords context 사용
-  const {
-    state: { coords },
-  } = useContext(CoordsContext);
+  // const {
+  //   state: { coords },
+  // } = useContext(CoordsContext);
 
   useResize(() => {
     if (window.innerWidth > 640) setIsMobile(false);
@@ -90,15 +90,16 @@ const Map = () => {
         <div className="w-[100%] z-10 relative">
           <KakaoMap
             center={{
-              lat: coord.latitude ?? coords?.latitude!,
-              lng: coord.longitude ?? coords?.longitude!,
+              lat: coord.latitude ?? 37.5664056,
+              lng: coord.longitude ?? 126.9778222,
             }}
             className={"w-[100%] h-[100%] relative"}
             level={3}
             //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
           >
-            <NavBar setLinePath={setLinePath} />
             <SearchAddressBar />
+            <NavBar setLinePath={setLinePath} />
+
             {/*TODO mapmarker componenet 분리*/}
             {coord.latitude && coord.longitude && (
               <MapMarker
