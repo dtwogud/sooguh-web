@@ -1,5 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import CoordsContext from "@/src/context/coords.context";
+import { BASIC_COORDS } from "@/src/basic-coords";
 
 export interface ICoordsState {
   latitude: number | null;
@@ -31,7 +32,12 @@ const useCoords = (warningText: string) => {
       console.log(`${warningText} >> ${error}`);
       dispatch({
         type: "UPDATE_COORDS",
-        payload: { coords: { latitude: 37.5759, longitude: 126.9768 } },
+        payload: {
+          coords: {
+            latitude: BASIC_COORDS.latitude,
+            longitude: BASIC_COORDS.longitude,
+          },
+        },
       });
     },
     [warningText],

@@ -12,6 +12,7 @@ import PinModal from "@/src/components/main/pin-modal";
 import useResize from "@/src/hooks/useResize";
 import NavBar from "@/src/components/nav-bar/nav-bar";
 import CoordsContext from "@/src/context/coords.context";
+import { BASIC_COORDS } from "@/src/basic-coords";
 
 export interface DetailData {
   id: number;
@@ -90,8 +91,8 @@ const Map = () => {
         <div className="w-[100%] z-10 relative">
           <KakaoMap
             center={{
-              lat: coord.latitude ?? 37.5664056,
-              lng: coord.longitude ?? 126.9778222,
+              lat: coord.latitude ?? BASIC_COORDS.latitude,
+              lng: coord.longitude ?? BASIC_COORDS.longitude,
             }}
             className={"w-[100%] h-[100%] relative"}
             level={3}
@@ -103,7 +104,7 @@ const Map = () => {
             {/*TODO mapmarker componenet 분리*/}
             {coord.latitude && coord.longitude && (
               <MapMarker
-                key={`${coord.latitude ?? 37.5664056}-${coord.longitude ?? 126.9778222}`}
+                key={`${coord.latitude ?? BASIC_COORDS.latitude}-${coord.longitude ?? BASIC_COORDS.longitude}`}
                 position={{
                   lat: coord.latitude,
                   lng: coord.longitude,
