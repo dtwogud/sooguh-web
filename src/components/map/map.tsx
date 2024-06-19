@@ -11,8 +11,8 @@ import useModal from "@/src/hooks/useModal";
 import PinModal from "@/src/components/main/pin-modal";
 import useResize from "@/src/hooks/useResize";
 import NavBar from "@/src/components/nav-bar/nav-bar";
-import CoordsContext from "@/src/context/coords.context";
-import { BASIC_COORDS } from "@/src/basic-coords";
+import { BASIC_COORDS } from "@/src/constants/basic-coords";
+import Warning from "../common/warning";
 
 export interface DetailData {
   id: number;
@@ -100,6 +100,9 @@ const Map = () => {
           >
             <SearchAddressBar />
             <NavBar setLinePath={setLinePath} />
+            {curCoords.latitude === BASIC_COORDS.latitude && (
+              <Warning message={"현재 위치와 다를 수 있습니다!"} />
+            )}
 
             {/*TODO mapmarker componenet 분리*/}
             {coord.latitude && coord.longitude && (

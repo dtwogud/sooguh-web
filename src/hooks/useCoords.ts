@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import CoordsContext from "@/src/context/coords.context";
-import { BASIC_COORDS } from "@/src/basic-coords";
+import { BASIC_COORDS } from "@/src/constants/basic-coords";
 
 export interface ICoordsState {
   latitude: number | null;
