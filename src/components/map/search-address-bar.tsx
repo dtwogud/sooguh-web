@@ -71,7 +71,8 @@ const SearchAddressBar = () => {
               <PrimaryButton
                 type="submit"
                 onClick={handleSubmit}
-                className={"border w-[100px] h-[36px]"}
+                className={"border w-[100px]"}
+                size={"small"}
                 title={"검색"}
               />
             }
