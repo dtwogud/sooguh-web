@@ -6,25 +6,18 @@ import FormItem from "@/src/components/form/FormItem";
 import TextInput from "@/src/components/input/TextInput";
 import { cva } from "class-variance-authority";
 import PrimaryButton from "@/src/components/button/primary-button";
-import useResize from "@/src/hooks/useResize";
 
 const SearchAddressBar = () => {
   const form = useForm<FieldValues>();
   const [info, setInfo] = useState<string>("");
-  const [isMobile, setIsMobile] = useState(false);
   const map = useMap();
-
-  useResize(() => {
-    if (window.innerWidth > 640) setIsMobile(false);
-    else if (window.innerWidth < 640) setIsMobile(true);
-  });
 
   useEffect(() => {
     if (!map) return;
     const ps = new kakao.maps.services.Places();
 
     if (info) {
-      ps.keywordSearch(info, (data, status, _pagina원tion) => {
+      ps.keywordSearch(info, (data, status, _pagination) => {
         if (status === kakao.maps.services.Status.OK) {
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
           // LatLngBounds 객체에 좌표를 추가
