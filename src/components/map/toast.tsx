@@ -1,6 +1,5 @@
 import React from "react";
 import { cva } from "class-variance-authority";
-import { useMap } from "react-kakao-maps-sdk";
 
 export interface ToastProps {
   message: React.ReactNode;

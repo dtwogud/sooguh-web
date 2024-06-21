@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Map as KakaoMap,
   MapMarker,
@@ -9,10 +9,13 @@ import useCoords, { ICoordsState } from "@/src/hooks/useCoords";
 import SearchAddressBar from "@/src/components/map/search-address-bar";
 import useModal from "@/src/hooks/useModal";
 import PinModal from "@/src/components/main/pin-modal";
-import useResize from "@/src/hooks/useResize";
 import NavBar from "@/src/components/nav-bar/nav-bar";
 import { BASIC_COORDS } from "@/src/constants/basic-coords";
 import Warning from "../common/warning";
+import Toast from "@/src/components/map/toast";
+import PrimaryButton from "@/src/components/button/primary-button";
+import Image from "next/image";
+import LatLng = kakao.maps.LatLng;
 
 export interface DetailData {
   id: number;
@@ -42,75 +45,90 @@ const dummyData = {
 };
 
 const Map = () => {
-  const [loading, error] = useKakaoLoader({
+  const [loading] = useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_APP_KEY!,
     libraries: ["clusterer", "drawing", "services"],
   });
   const curCoords = useCoords("waring");
-  const [coord, setCoord] = useState<ICoordsState>(curCoords);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [coords, setCoords] = useState<ICoordsState>(curCoords);
+  const [changedCoords, setChangedCoords] = useState<LatLng | ICoordsState>(
+    curCoords,
+  );
   const [linePath, setLinePath] = useState<any[]>([]);
+  const [isDragged, setIsDragged] = useState(false);
   const [detailData, setDetailData] = useState<DetailData | undefined>(
     undefined,
   );
   const { openModal, onModalOpen, onModalClose } = useModal();
 
-  // TODO coords context 사용
-  // const {
-  //   state: { coords },
-  // } = useContext(CoordsContext);
-
-  useResize(() => {
-    if (window.innerWidth > 640) setIsMobile(false);
-    else if (window.innerWidth < 640) setIsMobile(true);
-  });
-
   useEffect(() => {
-    if (!curCoords) setIsLoading(true);
     if (curCoords) {
-      setCoord(curCoords);
-      setIsLoading(false);
+      setCoords(curCoords);
     }
   }, [curCoords]);
 
-  const handleOnBoundsChange = useCallback((data: kakao.maps.Map) => {
-    console.log("data", data);
-  }, []);
+  const handleOnDragEnd = (data: kakao.maps.Map) => {
+    setChangedCoords(data.getCenter());
+    setIsDragged(true);
+  };
 
   const handleMarkerClick = (marker: kakao.maps.Marker, data: DetailData) => {
     onModalOpen();
     setDetailData(data);
   };
 
+  const handleRefreshData = () => {
+    console.log("changedCooreds", changedCoords);
+    setIsDragged(false);
+  };
+
   return (
     <>
-      {isLoading ? (
+      {loading ? (
         <div className={"flex h-[100%] items-center"}>Loading...</div>
       ) : (
         <div className="w-[100%] z-10 relative">
           <KakaoMap
             center={{
-              lat: coord.latitude ?? BASIC_COORDS.latitude,
-              lng: coord.longitude ?? BASIC_COORDS.longitude,
+              lat: coords.latitude ?? BASIC_COORDS.latitude,
+              lng: coords.longitude ?? BASIC_COORDS.longitude,
             }}
-            className={"w-[100%] h-[100%] relative"}
+            className={"w-[100%] h-[100%]"}
             level={3}
-            //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
+            onDragEnd={(data) => handleOnDragEnd(data)}
           >
             <SearchAddressBar />
             <NavBar setLinePath={setLinePath} />
+            {isDragged && (
+              <Toast
+                message={
+                  <PrimaryButton
+                    title={"현 지도에서 검색"}
+                    icon={
+                      <Image
+                        src={"/assets/icons/refresh.png"}
+                        width={16}
+                        height={16}
+                        alt={"현 지도에서 검색"}
+                      />
+                    }
+                    onClick={handleRefreshData}
+                    className={"px-[12px] py-[8px]"}
+                  />
+                }
+              />
+            )}
             {curCoords.latitude === BASIC_COORDS.latitude && (
               <Warning message={"현재 위치와 다를 수 있습니다!"} />
             )}
 
             {/*TODO mapmarker componenet 분리*/}
-            {coord.latitude && coord.longitude && (
+            {coords.latitude && coords.longitude && (
               <MapMarker
-                key={`${coord.latitude ?? BASIC_COORDS.latitude}-${coord.longitude ?? BASIC_COORDS.longitude}`}
+                key={`${coords.latitude ?? BASIC_COORDS.latitude}-${coords.longitude ?? BASIC_COORDS.longitude}`}
                 position={{
-                  lat: coord.latitude,
-                  lng: coord.longitude,
+                  lat: coords.latitude,
+                  lng: coords.longitude,
                 }}
                 image={{
                   src: "/assets/icons/location.png",
