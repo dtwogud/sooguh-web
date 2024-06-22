@@ -82,6 +82,14 @@ const Map = () => {
     setIsDragged(false);
   };
 
+  async function logJSONData() {
+    const response = await fetch(
+      "https://infuser.odcloud.kr/oas/docs?namespace=15127131/v1",
+    );
+    const jsonData = await response.json();
+    console.log("123", jsonData);
+  }
+
   return (
     <>
       {loading ? (
