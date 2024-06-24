@@ -50,9 +50,7 @@ const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
           relative flex items-center justify-center bg-key-color text-[white] disabled:text-system-grey-04 disabled:border-gray-05 disabled:bg-system-grey-06-50-no-alpha rounded-[8px] text-[14px] font-[600] leading-[24px]
         `}
       >
-        {!loading && (
-          <>{icon && <div className="absolute left-[18px]">{icon}</div>}</>
-        )}
+        {!loading && <>{icon && <div className={"mr-[8px]"}>{icon}</div>}</>}
         {loading ? <Spinner width={20} /> : title}
       </button>
     );
