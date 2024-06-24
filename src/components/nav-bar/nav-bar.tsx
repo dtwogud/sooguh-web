@@ -2,19 +2,25 @@ import React, { useContext } from "react";
 import { cva } from "class-variance-authority";
 import { useMap } from "react-kakao-maps-sdk";
 import CoordsContext from "@/src/context/coords.context";
+import Image from "next/image";
 
 export interface NavBarProps {
   setLinePath: (linePath: any) => void;
+  linePath: boolean;
 }
 
-const NavBar = ({ setLinePath }: NavBarProps) => {
+const NavBar = ({ setLinePath, linePath }: NavBarProps) => {
   const map = useMap();
   const {
     state: { coords },
   } = useContext(CoordsContext);
 
   const handleResetPath = () => {
-    setLinePath([]);
+    if (linePath && window.confirm("경로 안내를 취소하시겠습니까?")) {
+      setLinePath([]);
+    } else {
+      window.alert("안내 중인 길이 없습니다.");
+    }
   };
 
   const handleToCurCoords = () => {
@@ -25,20 +31,23 @@ const NavBar = ({ setLinePath }: NavBarProps) => {
     map.setCenter(moveLatLon);
   };
 
-  const handleRefresh = () => {
-    window.location.reload();
-  };
-
   return (
     <div className={wrapper()}>
       <button className={button()} onClick={handleToCurCoords}>
-        현위치
+        <Image
+          src={"/assets/icons/target.jpeg"}
+          width={28}
+          height={28}
+          alt="current position icon"
+        />
       </button>
       <button className={button()} onClick={handleResetPath}>
-        초기화
-      </button>
-      <button className={button()} onClick={handleRefresh}>
-        새로고침
+        <Image
+          src={"/assets/icons/reset.png"}
+          width={28}
+          height={28}
+          alt="reset icon"
+        />
       </button>
     </div>
   );
@@ -48,17 +57,16 @@ export default NavBar;
 
 const wrapper = cva([
   "z-[80]",
-  "absolute",
-  "flex",
+  "-translate-x-1/2 -translate-y-1/2",
+  "grid",
   "gap-[2px]",
   "items-center",
-  "fixed sm:inset-x-[8px] lg:inset-x-[16px] lg:top-[12px] sm:top-[8px]",
+  "fixed bottom-[60px] right-0",
   "lg:ml-[30%]",
   "text-[16px]",
   "font-[500]",
   "leading-[20px]",
-  "h-[54px]",
-  "sm:p-[8px] lg:p-[16px]",
+  "p-[8px]",
   "rounded-[12px]",
   "border-[2px]",
   "border-key-color",
@@ -66,4 +74,4 @@ const wrapper = cva([
   "lg:mt-[12px] sm:mt-[8px]",
 ]);
 
-const button = cva(["even:border-x-[2px]", "px-[6px]"]);
+const button = cva(["even:border-t-[1px]", "flex", "py-[2px]"]);

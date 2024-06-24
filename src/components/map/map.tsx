@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Map as KakaoMap,
   MapMarker,
@@ -75,20 +75,13 @@ const Map = () => {
   const handleMarkerClick = (marker: kakao.maps.Marker, data: DetailData) => {
     onModalOpen();
     setDetailData(data);
+    console.log("marker", marker);
   };
 
   const handleRefreshData = () => {
-    console.log("changedCooreds", changedCoords);
+    console.log("changedCoords", changedCoords);
     setIsDragged(false);
   };
-
-  async function logJSONData() {
-    const response = await fetch(
-      "https://infuser.odcloud.kr/oas/docs?namespace=15127131/v1",
-    );
-    const jsonData = await response.json();
-    console.log("123", jsonData);
-  }
 
   return (
     <>
@@ -106,7 +99,7 @@ const Map = () => {
             onDragEnd={(data) => handleOnDragEnd(data)}
           >
             <SearchAddressBar />
-            <NavBar setLinePath={setLinePath} />
+            <NavBar setLinePath={setLinePath} linePath={!!linePath.length} />
             {isDragged && (
               <Toast
                 message={
