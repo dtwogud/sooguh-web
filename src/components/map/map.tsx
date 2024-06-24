@@ -99,7 +99,7 @@ const Map = () => {
             //TODO onBoundsChanged={(data) => handleOnBoundsChange(data)}
           >
             <SearchAddressBar />
-            <NavBar setLinePath={setLinePath} />
+            {/*<NavBar setLinePath={setLinePath} />*/}
             {curCoords.latitude === BASIC_COORDS.latitude && (
               <Warning message={"현재 위치와 다를 수 있습니다!"} />
             )}

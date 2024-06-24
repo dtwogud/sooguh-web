@@ -85,7 +85,7 @@ const SearchAddressBar = () => {
 export default SearchAddressBar;
 
 const Wrapper = cva([
-  "w-[30%]",
+  // "w-[30%]",
   "sm:w-[100%]",
   "absolute",
   "lg:top-0",
@@ -93,4 +93,5 @@ const Wrapper = cva([
   "mt-[12px]",
   "sm:bottom-[0px]",
   "sm:bg-white",
+  "lg:inset-x-[16px]",
 ]);
