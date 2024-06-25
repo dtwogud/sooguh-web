@@ -16,6 +16,7 @@ import Toast from "@/src/components/map/toast";
 import PrimaryButton from "@/src/components/button/primary-button";
 import Image from "next/image";
 import LatLng = kakao.maps.LatLng;
+import CurrentMarker from "@/src/components/map/current-marker";
 
 export interface DetailData {
   id: number;
@@ -123,23 +124,8 @@ const Map = () => {
               <Warning message={"현재 위치와 다를 수 있습니다!"} />
             )}
 
-            {/*TODO mapmarker componenet 분리*/}
-            {coords.latitude && coords.longitude && (
-              <MapMarker
-                key={`${coords.latitude ?? BASIC_COORDS.latitude}-${coords.longitude ?? BASIC_COORDS.longitude}`}
-                position={{
-                  lat: coords.latitude,
-                  lng: coords.longitude,
-                }}
-                image={{
-                  src: "/assets/icons/location.png",
-                  size: {
-                    width: 41,
-                    height: 64,
-                  },
-                }}
-              />
-            )}
+            <CurrentMarker />
+
             {dummyData.info.map((data) => {
               return (
                 <MapMarker
