@@ -55,11 +55,11 @@ next-env.d.ts
 build
 
 # dotenv environment variables file
-.env
-.elasticbeanstalk
-.env.development
-.env.production
-.env.test
-.env.production
+#.env
+#.elasticbeanstalk
+#.env.development
+#.env.production
+#.env.test
+#.env.production
 .idea/prettier.xml
 .idea/aws.xml
