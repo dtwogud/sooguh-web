@@ -52,12 +52,6 @@ const SearchAddressBar = () => {
     } else if (!keyword) setRecommended([]);
   }, [map, keyword]);
 
-  const handleSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value) return;
-    const keyword = e.target.value;
-    if (keyword) setKeyword(keyword);
-  };
-
   const handleResetKeyword = () => {
     setKeyword("");
   };
