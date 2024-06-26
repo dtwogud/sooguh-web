@@ -49,7 +49,7 @@ const SearchAddressBar = () => {
           map.panTo(bounds);
         }
       });
-    }
+    } else if (!keyword) setRecommended([]);
   }, [map, keyword]);
 
   const handleSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +106,6 @@ const SearchAddressBar = () => {
 export default SearchAddressBar;
 
 const Wrapper = cva([
-  // "w-[30%]",
   "sm:w-[100%]",
   "absolute",
   "lg:top-0",
