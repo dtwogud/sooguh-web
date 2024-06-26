@@ -19,9 +19,9 @@
 
     /*Colors*/
     --color-key-color: #28a204;
-    --color-key-color-alpha-80: rgba(40, 162, 4, 0.8);
-    --color-key-color-alpha-80: rgba(40, 162, 4, 0.6);
-    --color-key-color-alpha-80: rgba(40, 162, 4, 0.4);
+    --color-key-color-alpha-20: rgba(40, 162, 4, 0.8);
+    --color-key-color-alpha-40: rgba(40, 162, 4, 0.6);
+    --color-key-color-alpha-60: rgba(40, 162, 4, 0.4);
     --color-key-color-alpha-80: rgba(40, 162, 4, 0.2);
     --color-dark: #0b0c0d;
     --color-black: #0b0c0d;

@@ -45,8 +45,8 @@ const CurrentMarker = () => {
         image={{
           src: "/assets/icons/location.png",
           size: {
-            width: 41,
-            height: 64,
+            width: 42,
+            height: 42,
           },
         }}
       />

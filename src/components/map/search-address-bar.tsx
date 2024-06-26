@@ -6,10 +6,14 @@ import FormItem from "@/src/components/form/FormItem";
 import TextInput from "@/src/components/input/TextInput";
 import { cva } from "class-variance-authority";
 import PrimaryButton from "@/src/components/button/primary-button";
+import RecommendedPlaces from "@/src/components/map/recommended-places";
+import Image from "next/image";
 
 const SearchAddressBar = () => {
   const form = useForm<FieldValues>();
   const [keyword, setKeyword] = useState<string>("");
+  const [recommended, setRecommended] =
+    useState<kakao.maps.services.PlacesSearchResult>([]);
   const map = useMap();
 
   useEffect(() => {
@@ -20,6 +24,9 @@ const SearchAddressBar = () => {
       ps.keywordSearch(keyword, (data, status, _pagination) => {
         console.log("data", data);
         if (status === kakao.maps.services.Status.OK) {
+          if (data) {
+            setRecommended(data);
+          }
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
           // LatLngBounds 객체에 좌표를 추가
           const bounds = new kakao.maps.LatLngBounds();
@@ -51,6 +58,10 @@ const SearchAddressBar = () => {
     if (keyword) setKeyword(keyword);
   };
 
+  const handleResetKeyword = () => {
+    setKeyword("");
+  };
+
   const handleSubmit = (values: any) => {
     if (values) setKeyword(values.search);
   };
@@ -62,17 +73,32 @@ const SearchAddressBar = () => {
           <TextInput
             placeHolder={"주소를 검색해 주세요."}
             rightIcon={
-              <PrimaryButton
-                type="submit"
-                onClick={handleSubmit}
-                className={"border w-[100px]"}
-                size={"small"}
-                title={"검색"}
-              />
+              <>
+                <button
+                  onClick={handleResetKeyword}
+                  className={resetButton()}
+                  type={"reset"}
+                >
+                  <Image
+                    src={"/assets/icons/clear.svg"}
+                    alt={"clear"}
+                    width={32}
+                    height={32}
+                  />
+                </button>
+                <PrimaryButton
+                  type="submit"
+                  onClick={handleSubmit}
+                  className={"border w-[100px]"}
+                  size={"small"}
+                  title={"검색"}
+                />
+              </>
             }
           />
         </FormItem>
       </Form>
+      {recommended.length && <RecommendedPlaces data={recommended} />}
     </section>
   );
 };
@@ -90,3 +116,5 @@ const Wrapper = cva([
   "sm:bg-white",
   "lg:inset-x-[16px]",
 ]);
+
+const resetButton = cva(["mx-[16px]"]);

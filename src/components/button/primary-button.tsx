@@ -47,7 +47,7 @@ const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
           ${buttonTypeStyle[variants]}
           ${buttonSize[size]} 
           ${className ?? ""}
-          relative flex items-center justify-center bg-key-color text-[white] disabled:text-system-grey-04 disabled:border-gray-05 disabled:bg-system-grey-06-50-no-alpha rounded-[8px] text-[14px] font-[600] leading-[24px]
+          relative flex items-center justify-center bg-key-color text-[white] disabled:text-system-grey-04 disabled:border-gray-05 disabled:bg-system-grey-06-50-no-alpha rounded-[8px] text-[14px] font-[600] leading-[24px] hover:scale-[1.02] transition-transform duration-300 ease-in-out
         `}
       >
         {!loading && <>{icon && <div className={"mr-[8px]"}>{icon}</div>}</>}
