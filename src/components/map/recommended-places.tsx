@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { cva } from "class-variance-authority";
 import { MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 
@@ -7,17 +7,19 @@ export interface RecommendedPlacesProps {
 }
 
 const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
+  const [id, setId] = useState("");
+
   const onRecommendedPlaceMouseOver = (
     item: kakao.maps.services.PlacesSearchResultItem,
   ) => {
-    console.log("item", item);
+    setId(item.id);
   };
 
-  const onMarkerMouseOver = (
+  const onMarkerMouseClick = (
     e: kakao.maps.Marker,
     item: kakao.maps.services.PlacesSearchResultItem,
   ) => {
-    console.log(e, item);
+    setId(item.id);
   };
 
   return (
@@ -25,9 +27,10 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
       <div className={wrapper()}>
         {data.map((item) => (
           <div
-            className={place()}
+            className={place({ active: id === item.id })}
             key={`${item.id}-${item.x}-${item.y}`}
             onMouseOver={() => onRecommendedPlaceMouseOver(item)}
+            onMouseLeave={() => setId("")}
           >
             <p>{item.place_name}</p>
             <p>{item.road_address_name}</p>
@@ -46,11 +49,18 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
               lat: Number(item.y),
               lng: Number(item.x),
             }}
-            onClick={(marker) => onMarkerMouseOver(marker, item)}
-            image={{
-              src: "/assets/icons/marker.png",
-              size: { width: 41, height: 64 },
-            }}
+            onClick={(marker) => onMarkerMouseClick(marker, item)}
+            image={
+              item.id === id
+                ? {
+                    src: "/assets/icons/marker.png",
+                    size: { width: 41, height: 64 },
+                  }
+                : {
+                    src: "/assets/icons/marker.png",
+                    size: { width: 20, height: 32 },
+                  }
+            }
           />
         ))}
       </MarkerClusterer>
@@ -60,6 +70,23 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
 
 export default RecommendedPlaces;
 
+const buttonStyles = cva("px-4 py-2 rounded font-bold text-white", {
+  variants: {
+    color: {
+      primary: "bg-blue-500 hover:bg-blue-600",
+      secondary: "bg-green-500 hover:bg-green-600",
+    },
+    size: {
+      small: "text-sm",
+      large: "text-lg",
+    },
+  },
+  defaultVariants: {
+    color: "primary",
+    size: "large",
+  },
+});
+
 const wrapper = cva([
   "bg-white lg:rounded-[8px]",
   "lg:px-[12px] lg:py-[8px]",
@@ -68,12 +95,25 @@ const wrapper = cva([
   "lg:absolute",
 ]);
 
-const place = cva([
-  "p-[8px]",
-  "even:border-t-[1px]",
-  "even:border-b-[1px]",
-  "grid",
-  "lg:gap-[8px] sm:gap-[4px]",
-  "hover:bg-[--color-key-color-alpha-80] hover:cursor-pointer",
-  "hover:scale-[1.02] transition-transform duration-300 ease-in-out",
-]);
+const place = cva(
+  [
+    "p-[8px]",
+    "even:border-t-[1px]",
+    "even:border-b-[1px]",
+    "grid",
+    "lg:gap-[8px] sm:gap-[4px]",
+    "hover:bg-[--color-key-color-alpha-80] hover:cursor-pointer",
+    "hover:scale-[1.02] transition-transform duration-300 ease-in-out",
+  ],
+  {
+    variants: {
+      active: {
+        true: "bg-[--color-key-color-alpha-80]",
+        false: "bg-white",
+      },
+    },
+    defaultVariants: {
+      active: false,
+    },
+  },
+);
