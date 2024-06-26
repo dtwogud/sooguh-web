@@ -9,15 +9,16 @@ import PrimaryButton from "@/src/components/button/primary-button";
 
 const SearchAddressBar = () => {
   const form = useForm<FieldValues>();
-  const [info, setInfo] = useState<string>("");
+  const [keyword, setKeyword] = useState<string>("");
   const map = useMap();
 
   useEffect(() => {
     if (!map) return;
     const ps = new kakao.maps.services.Places();
 
-    if (info) {
-      ps.keywordSearch(info, (data, status, _pagination) => {
+    if (keyword) {
+      ps.keywordSearch(keyword, (data, status, _pagination) => {
+        console.log("data", data);
         if (status === kakao.maps.services.Status.OK) {
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
           // LatLngBounds 객체에 좌표를 추가
@@ -42,16 +43,16 @@ const SearchAddressBar = () => {
         }
       });
     }
-  }, [map, info]);
+  }, [map, keyword]);
 
   const handleSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) return;
     const keyword = e.target.value;
-    if (keyword) setInfo(keyword);
+    if (keyword) setKeyword(keyword);
   };
 
   const handleSubmit = (values: any) => {
-    if (values) setInfo(values.search);
+    if (values) setKeyword(values.search);
   };
 
   return (
