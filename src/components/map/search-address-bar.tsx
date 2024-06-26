@@ -98,7 +98,7 @@ const SearchAddressBar = () => {
           />
         </FormItem>
       </Form>
-      {recommended.length && <RecommendedPlaces data={recommended} />}
+      {recommended.length > 0 && <RecommendedPlaces data={recommended} />}
     </section>
   );
 };
