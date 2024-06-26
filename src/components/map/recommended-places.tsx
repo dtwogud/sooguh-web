@@ -70,23 +70,6 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
 
 export default RecommendedPlaces;
 
-const buttonStyles = cva("px-4 py-2 rounded font-bold text-white", {
-  variants: {
-    color: {
-      primary: "bg-blue-500 hover:bg-blue-600",
-      secondary: "bg-green-500 hover:bg-green-600",
-    },
-    size: {
-      small: "text-sm",
-      large: "text-lg",
-    },
-  },
-  defaultVariants: {
-    color: "primary",
-    size: "large",
-  },
-});
-
 const wrapper = cva([
   "bg-white lg:rounded-[8px]",
   "lg:px-[12px] lg:py-[8px]",
