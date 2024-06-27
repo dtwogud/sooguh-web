@@ -105,13 +105,13 @@ const Map = () => {
               <Toast
                 message={
                   <PrimaryButton
-                    title={"현 지도에서 검색"}
+                    title={"현 지도에서 수거함 검색"}
                     icon={
                       <Image
                         src={"/assets/icons/refresh.png"}
                         width={16}
                         height={16}
-                        alt={"현 지도에서 검색"}
+                        alt={"현 지도에서 수거함 검색"}
                       />
                     }
                     onClick={handleRefreshData}
