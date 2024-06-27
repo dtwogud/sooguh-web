@@ -1,36 +1,65 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { cva } from "class-variance-authority";
 import { MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
+import CoordsContext from "@/src/context/coords.context";
+import Modal from "@/src/components/modal/modal";
+import useModal from "@/src/hooks/useModal";
+import PrimaryButton from "@/src/components/button/primary-button";
 
 export interface RecommendedPlacesProps {
   data: kakao.maps.services.PlacesSearchResult;
 }
 
 const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
-  const [id, setId] = useState("");
+  const { openModal, onModalOpen, onModalClose } = useModal();
+  const [clickedData, setClickedData] = useState<{
+    id: string;
+    x: string;
+    y: string;
+  }>({ id: "", x: "", y: "" });
+  const {
+    state: { coords },
+    dispatch,
+  } = useContext(CoordsContext);
+
+  const setStartCoords = () => {
+    dispatch({
+      type: "UPDATE_COORDS",
+      payload: {
+        coords: {
+          latitude: Number(clickedData.y),
+          longitude: Number(clickedData.x),
+        },
+      },
+    });
+    onModalClose();
+  };
 
   const onRecommendedPlaceMouseOver = (
     item: kakao.maps.services.PlacesSearchResultItem,
   ) => {
-    setId(item.id);
+    setClickedData({ id: item.id, x: item.x, y: item.y });
   };
 
   const onMarkerMouseClick = (
     e: kakao.maps.Marker,
     item: kakao.maps.services.PlacesSearchResultItem,
   ) => {
-    setId(item.id);
+    setClickedData({ id: item.id, x: item.x, y: item.y });
+    onModalOpen();
   };
+
+  console.log("coords", coords);
 
   return (
     <>
       <div className={wrapper()}>
         {data.map((item) => (
           <div
-            className={place({ active: id === item.id })}
+            className={place({ active: clickedData.id === item.id })}
             key={`${item.id}-${item.x}-${item.y}`}
             onMouseOver={() => onRecommendedPlaceMouseOver(item)}
-            onMouseLeave={() => setId("")}
+            onMouseLeave={() => setClickedData({ id: "", x: "", y: "" })}
           >
             <p>{item.place_name}</p>
             <p>{item.road_address_name}</p>
@@ -51,7 +80,7 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
             }}
             onClick={(marker) => onMarkerMouseClick(marker, item)}
             image={
-              item.id === id
+              item.id === clickedData.id
                 ? {
                     src: "/assets/icons/marker.png",
                     size: { width: 41, height: 64 },
@@ -64,6 +93,25 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
           />
         ))}
       </MarkerClusterer>
+      <Modal isOpen={openModal} onClose={onModalClose}>
+        <Modal.Content
+          className={
+            "bg-[white] text-[black] fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-[12px]"
+          }
+        >
+          <div className={"px-[12px] my-[24px]"}>
+            해당 장소를 출발지로 설정하시겠습니까?
+          </div>
+          <div className={"grid grid-cols-2"}>
+            <PrimaryButton
+              type={"button"}
+              onClick={setStartCoords}
+              title={"확인"}
+            />
+            <button onClick={onModalClose}>취소</button>
+          </div>
+        </Modal.Content>
+      </Modal>
     </>
   );
 };

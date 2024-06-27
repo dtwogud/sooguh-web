@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Modal from "@/src/components/modal/modal";
 import { DetailData } from "@/src/components/map/map";
-import useCoords from "@/src/hooks/useCoords";
-import { Polyline, useMap } from "react-kakao-maps-sdk";
+import { Polyline } from "react-kakao-maps-sdk";
+import CoordsContext from "@/src/context/coords.context";
 
 export interface PinModalProps {
   data?: DetailData;
@@ -19,16 +19,18 @@ const PinModal = ({
   linePath,
   setLinePath,
 }: PinModalProps) => {
-  const curCoords = useCoords("waring");
   const kakaoUrl = "https://apis-navi.kakaomobility.com/v1/directions";
   const headers = {
     Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY!}`,
     "Content-Type": "application/json",
   };
+  const {
+    state: { coords },
+  } = useContext(CoordsContext);
 
   const handleToNavigate = async () => {
     const queryParams = new URLSearchParams({
-      origin: `${curCoords.longitude},${curCoords.latitude}`,
+      origin: `${coords?.longitude!},${coords?.latitude!}`,
       destination: `${data?.lon},${data?.lat}`,
     });
     const requestUrl = `${kakaoUrl}?${queryParams}`;

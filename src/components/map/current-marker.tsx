@@ -26,7 +26,7 @@ const CurrentMarker = () => {
       onFailDetectCoords,
       { enableHighAccuracy: true, timeout: 5000 },
     );
-    console.log("coords", coords);
+    console.log("현재 위치 - hooks", coords);
   };
 
   useEffect(() => {
