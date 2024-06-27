@@ -4,7 +4,6 @@ import { MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 import CoordsContext from "@/src/context/coords.context";
 import Modal from "@/src/components/modal/modal";
 import useModal from "@/src/hooks/useModal";
-import PrimaryButton from "@/src/components/button/primary-button";
 
 export interface RecommendedPlacesProps {
   data: kakao.maps.services.PlacesSearchResult;
@@ -17,10 +16,7 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
     x: string;
     y: string;
   }>({ id: "", x: "", y: "" });
-  const {
-    state: { coords },
-    dispatch,
-  } = useContext(CoordsContext);
+  const { dispatch } = useContext(CoordsContext);
 
   const setStartCoords = () => {
     dispatch({
@@ -48,8 +44,6 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
     setClickedData({ id: item.id, x: item.x, y: item.y });
     onModalOpen();
   };
-
-  console.log("coords", coords);
 
   return (
     <>
@@ -93,6 +87,7 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
           />
         ))}
       </MarkerClusterer>
+      {/*TODO modal 컴포넌트 분리*/}
       <Modal isOpen={openModal} onClose={onModalClose}>
         <Modal.Content
           className={
@@ -102,12 +97,15 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
           <div className={"px-[12px] my-[24px]"}>
             해당 장소를 출발지로 설정하시겠습니까?
           </div>
-          <div className={"grid grid-cols-2"}>
-            <PrimaryButton
+          <div className={"bg-[white] text-[black] grid grid-cols-2"}>
+            <button
               type={"button"}
               onClick={setStartCoords}
               title={"확인"}
-            />
+              className={"bg-[yellowgreen] p-[12px]"}
+            >
+              확인
+            </button>
             <button onClick={onModalClose}>취소</button>
           </div>
         </Modal.Content>
