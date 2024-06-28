@@ -15,7 +15,17 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
     id: string;
     x: string;
     y: string;
-  }>({ id: "", x: "", y: "" });
+    place_name: string;
+    address_name: string;
+    road_address_name: string;
+  }>({
+    id: "",
+    x: "",
+    y: "",
+    place_name: "",
+    address_name: "",
+    road_address_name: "",
+  });
   const { dispatch } = useContext(CoordsContext);
 
   const setStartCoords = () => {
@@ -34,14 +44,47 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
   const onRecommendedPlaceMouseOver = (
     item: kakao.maps.services.PlacesSearchResultItem,
   ) => {
-    setClickedData({ id: item.id, x: item.x, y: item.y });
+    setClickedData({
+      id: item.id,
+      x: item.x,
+      y: item.y,
+      place_name: item.place_name,
+      address_name: item.address_name,
+      road_address_name: item.road_address_name,
+    });
   };
 
   const onMarkerMouseClick = (
     e: kakao.maps.Marker,
     item: kakao.maps.services.PlacesSearchResultItem,
   ) => {
-    setClickedData({ id: item.id, x: item.x, y: item.y });
+    setClickedData({
+      id: item.id,
+      x: item.x,
+      y: item.y,
+      place_name: item.place_name,
+      address_name: item.address_name,
+      road_address_name: item.road_address_name,
+    });
+    onModalOpen();
+  };
+
+  const onRecommendedPlaceClicked = (
+    id: string,
+    x: string,
+    y: string,
+    place_name: string,
+    address_name: string,
+    road_address_name: string,
+  ) => {
+    setClickedData({
+      id: id,
+      x: x,
+      y: y,
+      place_name: place_name,
+      address_name: address_name,
+      road_address_name: road_address_name,
+    });
     onModalOpen();
   };
 
@@ -53,7 +96,16 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
             className={place({ active: clickedData.id === item.id })}
             key={`${item.id}-${item.x}-${item.y}`}
             onMouseOver={() => onRecommendedPlaceMouseOver(item)}
-            onMouseLeave={() => setClickedData({ id: "", x: "", y: "" })}
+            onClick={() =>
+              onRecommendedPlaceClicked(
+                item.id,
+                item.x,
+                item.y,
+                item.place_name,
+                item.road_address_name,
+                item.address_name,
+              )
+            }
           >
             <p>{item.place_name}</p>
             <p>{item.road_address_name}</p>
@@ -96,6 +148,11 @@ const RecommendedPlaces = ({ data }: RecommendedPlacesProps) => {
         >
           <div className={"px-[12px] my-[24px]"}>
             해당 장소를 출발지로 설정하시겠습니까?
+          </div>
+          <div className={"grid gap-[4px] px-[12px] my-[24px]"}>
+            <p>{clickedData.place_name}</p>
+            <p>{clickedData.road_address_name}</p>
+            <p>지번: {clickedData.address_name}</p>
           </div>
           <div className={"bg-[white] text-[black] grid grid-cols-2"}>
             <button
