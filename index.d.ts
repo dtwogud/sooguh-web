@@ -1,8 +1,13 @@
+import "i18next";
+import React from "react";
 import { ICoordsState } from "@/src/hooks/useCoords";
+import { AppProps } from "next/app";
 
-interface AppLayoutProps<T = {}> {
-  children: React.ReactNode;
-  params: T;
-  searchParams: { [key: string]: string | string[] | undefined };
-  coords?: ICoordsState;
+declare global {
+  interface AppLayoutProps<T = AppProps> {
+    children: React.ReactNode;
+    params: T;
+    searchParams: { [key: string]: string | string[] | undefined };
+    coords?: ICoordsState;
+  }
 }
