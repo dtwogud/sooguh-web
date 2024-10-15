@@ -11,7 +11,10 @@
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
     "@next/bundle-analyzer": "^14.2.3",
+    "@tanstack/react-query": "^4.36.1",
+    "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
+    "http-proxy-middleware": "^3.0.3",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
