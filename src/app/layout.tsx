@@ -4,6 +4,8 @@ import "@/src/styles/reset.css";
 import { CoordsProvider } from "@/src/context/coords.context";
 import React from "react";
 import { BASIC_COORDS } from "@/src/constants/basic-coords";
+import { queryClient } from "@/src/models/react-query/query-client";
+import { QueryClientProvider } from "@tanstack/react-query";
 
 export const metadata: Metadata = {
   title: "SOOGUH",
@@ -19,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
+        {/*<QueryClientProvider client={queryClient}>*/}
         <CoordsProvider
           coords={{
             latitude: BASIC_COORDS.latitude,
@@ -33,6 +36,7 @@ export default function RootLayout({
             {children}
           </main>
         </CoordsProvider>
+        {/*</QueryClientProvider>*/}
       </body>
     </html>
   );
